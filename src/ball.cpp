@@ -66,6 +66,7 @@ void Ball::Move()
 
     float deltaTime = GetFrameTime();
 
+
     m_Position.x += m_Direction.x * m_Speed * deltaTime;
     m_Position.y += m_Direction.y * m_Speed * deltaTime;
 
@@ -92,12 +93,13 @@ void Ball::Move()
         m_Position.y = m_ScaledRadius;  // Clamp position
     }
 
-    if (m_Speed > 100.0f)
-    {
-        //m_Speed -= m_Fritcion * deltaTime;
-        m_Speed *= exp(-m_Friction * deltaTime);
-    }
-    else
+    float rollingFriction = m_RollingFrictionCoefficient * m_BallMass * 9.81f; // Normal force = m_BallMass * g
+    float decayFactor = exp(-rollingFriction * deltaTime / m_BallMass);
+
+    m_Speed *= decayFactor;
+
+
+    if (m_Speed < 150.0f) // Using a small threshold to stop the ball
     {
         m_Speed = 0.0f;
     }

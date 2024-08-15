@@ -27,8 +27,9 @@ private:
     float m_ArrowRotation{};
     Vector2 m_ArrowOrigin;
 
-
-    
+    float m_BallMass{ 0.5f };
+    float m_RollingFrictionCoefficient{ 0.1f };
+   
     
 
 };
