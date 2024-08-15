@@ -8,14 +8,12 @@ Ball::Ball(int screenWidth, int screenHeight)
     m_ScreenWidth = screenWidth;
     m_ScreenHeight = screenHeight;
 
-
-
     m_Position.x = static_cast<float>(m_ScreenWidth) / 2;
     m_Position.y = static_cast<float>(m_ScreenHeight) / 2;
     m_IsDragging = false;
 
     m_BallTexture = LoadTexture("assets/ball.png");
-    m_ScaledRadius = (m_BallTexture.width / 2.0f) * 5;
+    m_ScaledRadius = (m_BallTexture.width / 2.0f) * 4;
 
     m_ArrowTexture = LoadTexture("assets/arrow.png");
     m_ArrowOrigin = { m_ArrowTexture.width / 2.0f, m_ArrowTexture.height / 2.0f };
@@ -31,15 +29,11 @@ Ball::~Ball()
 void Ball::Draw()
 {
 
-    //Vector2 drawPosition = { m_Position.x - (m_ScaledRadius / 5), m_Position.y - (m_ScaledRadius / 5) };
-   //DrawCircle( m_Position.x,  m_Position.y, m_Radius+7, BLACK); //Imitate black outline
-   //DrawCircle( m_Position.x,  m_Position.y, m_Radius, WHITE);
-
-    DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius ,m_Position.y - m_ScaledRadius }, 0, 5, WHITE);
+    
+    DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius ,m_Position.y - m_ScaledRadius }, 0, 4, WHITE);
 
     if (m_IsDragging)
     {
-
 
         //Offset arrow depending on its angle around the ball so the tail is always touching the ball
         Vector2 arrowPosition = {
@@ -47,12 +41,9 @@ void Ball::Draw()
             m_Position.y + m_ScaledRadius * sin((m_ArrowRotation * (PI / 180)))
         };
 
-
-
-
         DrawTexturePro(m_ArrowTexture,
             { 0, 0, (float)m_ArrowTexture.width, (float)m_ArrowTexture.height },
-            { arrowPosition.x, arrowPosition.y, (float)m_ArrowTexture.width * 6, (float)m_ArrowTexture.height * 5 },
+            { arrowPosition.x, arrowPosition.y, (float)m_ArrowTexture.width * 5, (float)m_ArrowTexture.height * 4},
             { 0, m_ScaledRadius },
             m_ArrowRotation,
             WHITE);
@@ -69,6 +60,7 @@ void Ball::Move()
 
     m_Position.x += m_Direction.x * m_Speed * deltaTime;
     m_Position.y += m_Direction.y * m_Speed * deltaTime;
+
 
     // Check for collisions and handle bouncing
     if (m_Position.x >= m_ScreenWidth - m_ScaledRadius)
@@ -93,22 +85,17 @@ void Ball::Move()
         m_Position.y = m_ScaledRadius;  // Clamp position
     }
 
-    float rollingFriction = m_RollingFrictionCoefficient * m_BallMass * 9.81f; // Normal force = m_BallMass * g
+    // Normal force = m_BallMass * g
+    float rollingFriction = m_RollingFrictionCoefficient * m_BallMass * 9.81f; 
     float decayFactor = exp(-rollingFriction * deltaTime / m_BallMass);
 
     m_Speed *= decayFactor;
 
 
-    if (m_Speed < 150.0f) // Using a small threshold to stop the ball
+    if (m_Speed < 100.0f) // Using a small threshold to stop the ball
     {
         m_Speed = 0.0f;
     }
-
-
-
-   
-   
-
 
 }
 
@@ -132,6 +119,7 @@ void Ball::Update()
         m_MousePos = GetMousePosition();
 
         m_ArrowRotation = atan2(m_Position.y - m_MousePos.y, m_Position.x - m_MousePos.x) * (180 / PI);
+
         // If the mouse button is released, calculate speed and direction
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
