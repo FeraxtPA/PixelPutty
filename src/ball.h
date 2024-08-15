@@ -12,7 +12,7 @@ public:
     
 private:
     float m_Speed{ 0.0f };
-    float m_RotationAngle;
+    float m_DragLength{};
     float m_ScaledRadius{};
     Vector2 m_Position{};
     Vector2 m_Direction{ 1,1 };

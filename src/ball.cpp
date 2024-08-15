@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <iostream>
 
+
 Ball::Ball(int screenWidth, int screenHeight)
 {
     m_ScreenWidth = screenWidth;
@@ -17,6 +18,7 @@ Ball::Ball(int screenWidth, int screenHeight)
 
     m_ArrowTexture = LoadTexture("assets/arrow.png");
     m_ArrowOrigin = { m_ArrowTexture.width / 2.0f, m_ArrowTexture.height / 2.0f };
+    m_DragLength = 1.0f;
 
 }
 
@@ -30,26 +32,27 @@ void Ball::Draw()
 {
 
     
-    DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius ,m_Position.y - m_ScaledRadius }, 0, 4, WHITE);
 
     if (m_IsDragging)
     {
-
+       
         //Offset arrow depending on its angle around the ball so the tail is always touching the ball
         Vector2 arrowPosition = {
-            m_Position.x + m_ScaledRadius * cos((m_ArrowRotation * (PI / 180))),
-            m_Position.y + m_ScaledRadius * sin((m_ArrowRotation * (PI / 180)))
+            m_Position.x  + (m_ScaledRadius-5) * cos((m_ArrowRotation * (PI / 180))),
+            m_Position.y  + (m_ScaledRadius-5) * sin((m_ArrowRotation * (PI / 180)))
         };
 
         DrawTexturePro(m_ArrowTexture,
             { 0, 0, (float)m_ArrowTexture.width, (float)m_ArrowTexture.height },
-            { arrowPosition.x, arrowPosition.y, (float)m_ArrowTexture.width * 5, (float)m_ArrowTexture.height * 4},
+            { arrowPosition.x, arrowPosition.y, (float)m_ArrowTexture.width * 6, (float)m_ArrowTexture.height * 4},
             { 0, m_ScaledRadius },
             m_ArrowRotation,
             WHITE);
 
         DrawLineEx({ m_Position.x,m_Position.y }, { m_MousePos.x, m_MousePos.y }, 5, RED);
     }
+        
+    DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius ,m_Position.y - m_ScaledRadius }, 0, 4, WHITE);
 }
 
 void Ball::Move()
@@ -127,13 +130,14 @@ void Ball::Update()
             m_Speed = std::min(sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y) * 5.0f, 3000.0f); // Adjust the multiplier as needed for game feel
             
             // Normalize the direction vector
-            float length = sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y);
-            if (length > 0)
+            m_DragLength = sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y);
+            
+            if (m_DragLength > 0)
             {
                 //Minus becase we need to send the ball
                 //the opposite direction from the drag motion
-                m_Direction.x = -dragVector.x / length;
-                m_Direction.y = -dragVector.y / length;
+                m_Direction.x = -dragVector.x / m_DragLength;
+                m_Direction.y = -dragVector.y / m_DragLength;
             }
 
             m_IsDragging = false;
