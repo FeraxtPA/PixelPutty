@@ -92,18 +92,20 @@ void Ball::Move()
         m_Position.y = m_ScaledRadius;  // Clamp position
     }
 
-    if (m_Speed > 0)
+    if (m_Speed > 100.0f)
     {
-        m_Speed -= m_Friction * deltaTime;
+        //m_Speed -= m_Fritcion * deltaTime;
+        m_Speed *= exp(-m_Friction * deltaTime);
     }
-
-
-
-    // Stop the ball completely if speed is too low
-    if (m_Speed < 50.0f)
+    else
     {
         m_Speed = 0.0f;
     }
+
+
+
+   
+   
 
 
 }
@@ -133,7 +135,7 @@ void Ball::Update()
         {
             Vector2 dragVector = { m_MousePos.x - m_DragStart.x, m_MousePos.y - m_DragStart.y };
             m_Speed = std::min(sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y) * 5.0f, 3000.0f); // Adjust the multiplier as needed for game feel
-
+            
             // Normalize the direction vector
             float length = sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y);
             if (length > 0)

@@ -17,7 +17,7 @@ private:
     Vector2 m_Direction{ 1,1 };
     int m_ScreenWidth{};
     int m_ScreenHeight{};
-    float m_Friction{ 1000.0f };
+    float m_Friction{ 0.95f };
     bool m_IsDragging{};
     Vector2 m_DragStart{};
     Vector2 m_MousePos{};
@@ -26,5 +26,9 @@ private:
     Texture2D m_ArrowTexture{};
     float m_ArrowRotation{};
     Vector2 m_ArrowOrigin;
+
+
+    
+    
 
 };
