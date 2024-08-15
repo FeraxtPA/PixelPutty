@@ -9,7 +9,7 @@ public:
     void Draw();
     void Update();
     void Move();
-
+    
 private:
     float m_Speed{ 0.0f };
     float m_ScaledRadius{};

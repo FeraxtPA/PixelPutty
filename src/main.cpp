@@ -7,8 +7,8 @@ int main()
     const int screenWidth = 1000;
     const int screenHeight = 1000;
 
+    const int testCommit = 1;
 
-    const int committest = 5;
 
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
@@ -31,7 +31,6 @@ int main()
 
 
     }
-
 
 
     CloseWindow();
