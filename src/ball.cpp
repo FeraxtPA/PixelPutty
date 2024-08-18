@@ -14,7 +14,8 @@ Ball::Ball(int screenWidth, int screenHeight)
     m_IsDragging = false;
 
     m_BallTexture = LoadTexture("assets/ball.png");
-    m_ScaledRadius = (m_BallTexture.width / 2.0f) * 4;
+    float scaleFactor = 4.0f;
+    m_ScaledRadius = (m_BallTexture.width / 2.0f) * scaleFactor;
 
     m_ArrowTexture = LoadTexture("assets/arrow.png");
     m_ArrowOrigin = { m_ArrowTexture.width / 2.0f, m_ArrowTexture.height / 2.0f };

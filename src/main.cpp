@@ -1,6 +1,5 @@
 #include "raylib.h"
-#include "ball.h"
-#include "background.h"
+#include "game.h"
 
 int main()
 {
@@ -15,17 +14,19 @@ int main()
     SetTargetFPS(60);             
     SetExitKey(KEY_NULL);
 
-    Ball ball{ screenWidth,screenHeight };
-    Background background{screenWidth, screenHeight};
+    Game game{ screenWidth, screenHeight };
+
     while (!WindowShouldClose())
     {
 
-        ball.Update();
+        game.Update();
+
         BeginDrawing();
 
         ClearBackground(DARKGRAY);
-        background.Draw();
-        ball.Draw();
+
+        game.Draw();
+     
         DrawFPS(10, 10);
         EndDrawing();
 

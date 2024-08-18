@@ -5,8 +5,11 @@ class Background
 {
 
 public:
+
+
     Background(int width, int height);
     ~Background();
+        
    
     void Draw();
 

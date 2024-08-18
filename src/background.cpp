@@ -1,14 +1,16 @@
 #include "background.h"
 
+
 Background::Background(int width, int height)
 {
-    m_ScreenSize = {static_cast<float>(width), static_cast<float>(height)};
+    m_ScreenSize = { static_cast<float>(width), static_cast<float>(height) };
     m_BackgroundTexture = LoadTexture("assets/background.png");
     m_TextureScale = 5;
 }
 
 Background::~Background()
 {
+
     UnloadTexture(m_BackgroundTexture);
 }
 
@@ -17,9 +19,9 @@ Background::~Background()
 
 void Background::Draw()
 {
-    /*    
-    int numCellsX = m_ScreenSize.x / m_CellSize; 
-    int numCellsY = m_ScreenSize.y / m_CellSize;  
+    /*
+    int numCellsX = m_ScreenSize.x / m_CellSize;
+    int numCellsY = m_ScreenSize.y / m_CellSize;
 
     for (int x = 0; x < numCellsX; ++x)
     {
@@ -36,13 +38,12 @@ void Background::Draw()
         }
     }*/
 
-     //Scale the texture
+    //Scale the texture
     Rectangle sourceRec = { 0, 0, (float)m_ScreenSize.x / m_TextureScale, (float)m_ScreenSize.y / m_TextureScale };
     //Cover entire screen
     Rectangle destRec = { 0, 0, (float)m_ScreenSize.x, (float)m_ScreenSize.y };
 
-    DrawTexturePro(m_BackgroundTexture, sourceRec, destRec, Vector2{0, 0}, 0.0f, WHITE);
+    DrawTexturePro(m_BackgroundTexture, sourceRec, destRec, Vector2{ 0, 0 }, 0.0f, WHITE);
 }
-
 
 

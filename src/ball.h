@@ -9,7 +9,9 @@ public:
     void Draw();
     void Update();
     void Move();
-    
+    Vector2 GetPosition() { return m_Position; }
+    float GetRadius() { return m_ScaledRadius; }
+    float GetSpeed() { return m_Speed; }
 private:
     float m_Speed{ 0.0f };
     float m_DragLength{};
