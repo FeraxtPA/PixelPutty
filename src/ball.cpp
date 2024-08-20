@@ -21,6 +21,8 @@ Ball::Ball(int screenWidth, int screenHeight)
     m_ArrowOrigin = { m_ArrowTexture.width / 2.0f, m_ArrowTexture.height / 2.0f };
     m_DragLength = 1.0f;
 
+    m_Scale = 1.0f;
+
 }
 
 Ball::~Ball()
@@ -53,13 +55,13 @@ void Ball::Draw()
         DrawLineEx({ m_Position.x,m_Position.y }, { m_MousePos.x, m_MousePos.y }, 5, RED);
     }
         
-    DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius ,m_Position.y - m_ScaledRadius }, 0, 4, WHITE);
+    DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius * m_Scale ,m_Position.y - m_ScaledRadius * m_Scale }, 0, 4 * m_Scale, WHITE);
 }
 
-void Ball::Move()
+void Ball::Move(float deltaTime)
 {
 
-    float deltaTime = GetFrameTime();
+   
 
 
     m_Position.x += m_Direction.x * m_Speed * deltaTime;
@@ -103,7 +105,14 @@ void Ball::Move()
 
 }
 
-void Ball::Update()
+void Ball::Reset(Vector2 position)
+{
+    m_Speed = 0.0f;
+    m_Scale = 1.0f;
+    m_Position = position;
+}
+
+void Ball::Update(float deltaTime)
 {
     m_MousePos = GetMousePosition();
 
@@ -146,7 +155,7 @@ void Ball::Update()
     }
     else
     {
-        Move();
+        Move(deltaTime);
 
     }
 }

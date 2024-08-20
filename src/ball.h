@@ -7,13 +7,19 @@ public:
     Ball(int screenWidth, int screenHeight);
     ~Ball();
     void Draw();
-    void Update();
-    void Move();
+    void Update(float deltaTime);
+    void Move(float deltaTime);
     Vector2 GetPosition() { return m_Position; }
     float GetRadius() { return m_ScaledRadius; }
     float GetSpeed() { return m_Speed; }
+    float GetScale() {return m_Scale;}
+    void SetSpeed(float speed){m_Speed = speed;}
+    void SetScale(float scale){m_Scale = scale;}
+    void SetPosition(Vector2 position){m_Position = position;}
+    void Reset(Vector2 position);
 private:
     float m_Speed{ 0.0f };
+    float m_Scale{};
     float m_DragLength{};
     float m_ScaledRadius{};
     Vector2 m_Position{};

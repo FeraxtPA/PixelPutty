@@ -15,8 +15,9 @@ public:
 	Game(int width, int height);
 	~Game();
 	void Draw();
-	void Update();
+	void Update(float deltaTime);
 	bool CheckBallAndHoleCollision();
+	void BallAnimation(float deltaTime);
 
 private:
 	int m_ScreenWidth{};
@@ -24,4 +25,10 @@ private:
 	Ball m_Ball;
 	Hole m_Hole;
 	Background m_Background;
+
+
+    float m_ScaleDuration;    
+	float m_ScaleSpeed;
+    float m_TargetScale;  
+	bool m_IsInHole;
 };
