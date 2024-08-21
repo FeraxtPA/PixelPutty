@@ -39,10 +39,10 @@ Texture2D TextureManager::GetTexture(int tileIndexX, int tileIndexY)
     int spriteHeight = m_TileHeight;
 
     Rectangle sourceRect = {
-        tileIndexX * spriteWidth,
-        tileIndexY * spriteHeight,
-        spriteWidth,
-        spriteHeight
+        static_cast<float>(tileIndexX) * spriteWidth,
+        static_cast<float>(tileIndexY)  * spriteHeight,
+        static_cast<float>(spriteWidth),
+        static_cast<float>(spriteHeight)
     };
 
     Image spriteImage = LoadImageFromTexture(m_SpriteSheet);
