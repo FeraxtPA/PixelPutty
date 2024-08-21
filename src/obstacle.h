@@ -6,17 +6,16 @@ class Obstacle
 {
 public:
     Obstacle();
+    Obstacle(Texture2D texture); 
     ~Obstacle();
 
     void Draw();
     Rectangle GetRect() const;
     void SetPosition(Vector2 position);
     Vector2 GetPosition() const;
-    static void LoadTextures();
-    static void UnloadTextures();
-private:
-   
+    void SetTexture(Texture2D texture); 
 
-    static Texture2D m_ObstacleTexture;
+private:
     Vector2 m_Position{};
+    Texture2D m_ObstacleTexture;
 };

@@ -9,8 +9,8 @@ public:
 	Hole(int width, int height);
 	~Hole();
 	void Draw();
-	Vector2 GetPosition() { return m_Position; }
-	float GetRadius() { return m_ScaledRadius; }
+	Vector2 GetPosition() const { return m_Position; }
+	float GetRadius()const  { return m_ScaledRadius; }
 
 private:
 	int m_ScreenWidth{};

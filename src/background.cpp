@@ -1,17 +1,17 @@
 #include "background.h"
-
+#include "TextureManager.h"
 
 Background::Background(int width, int height)
 {
     m_ScreenSize = { static_cast<float>(width), static_cast<float>(height) };
-    m_BackgroundTexture = LoadTexture("assets/background.png");
-    m_TextureScale = 5;
+    m_BackgroundTexture = TextureManager::GetTexture(4, 0);
+    m_TextureScale = 10;
 }
 
 Background::~Background()
 {
 
-    UnloadTexture(m_BackgroundTexture);
+    
 }
 
 

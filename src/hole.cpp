@@ -1,11 +1,12 @@
 #include "hole.h"
+#include "TextureManager.h"
 
 Hole::Hole(int width,  int height)
 {
 	m_ScreenWidth  =  width;
 	m_ScreenHeight =  height;
 
-	m_HoleTexture = LoadTexture("assets/hole.png");
+	m_HoleTexture = TextureManager::GetTexture(2, 0);
 	float scaleFactor = 6.0f;
 	m_Position = {
 	   static_cast<float>((m_ScreenWidth - m_HoleTexture.width * scaleFactor) / 2),  // Center X with scaling

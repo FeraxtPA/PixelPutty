@@ -1,5 +1,7 @@
 #include "raylib.h"
 #include "game.h"
+#include "TextureManager.h"
+
 
 int main()
 {
@@ -9,10 +11,13 @@ int main()
 
     
     SetConfigFlags(FLAG_MSAA_4X_HINT);
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "PixelPutty");
     SetMouseCursor(MOUSE_CURSOR_ARROW);
-    //SetTargetFPS(60);             
+    SetTargetFPS(165);             
     SetExitKey(KEY_NULL);
+
+    TextureManager::LoadSpriteSheet("assets/Spritesheet.png", 8, 8);
+
 
     Game game{ screenWidth, screenHeight };
 

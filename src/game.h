@@ -5,6 +5,8 @@
 #include "hole.h"
 #include "obstacle.h"
 #include <vector>
+#include "TextureManager.h"
+
 class Game
 {
 	
@@ -19,7 +21,7 @@ public:
 	bool CheckBallAndHoleCollision();
 	bool CheckBallAndObstacleCollision();
 	void BallAnimation(float deltaTime);
-
+	
 	void ApplyCollisionResponse();
 private:
 	int m_ScreenWidth{};
@@ -35,4 +37,5 @@ private:
 	bool m_IsInHole{};
 	Vector2 m_LastCollisionNormal{};
 	float m_CollisionPenetration{};
+	bool m_IsInitialized{};
 };

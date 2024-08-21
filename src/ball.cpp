@@ -2,22 +2,25 @@
 
 #include <raylib.h>
 #include <iostream>
-
+#include "TextureManager.h"
 
 Ball::Ball(int screenWidth, int screenHeight)
 {
     m_ScreenWidth = screenWidth;
     m_ScreenHeight = screenHeight;
 
+    m_BallTexture = TextureManager::GetTexture(0, 0);
+    m_ArrowTexture = TextureManager::GetTexture(1, 0);
     m_Position.x = static_cast<float>(m_ScreenWidth) / 2;
     m_Position.y = static_cast<float>(m_ScreenHeight) / 2;
     m_IsDragging = false;
 
-    m_BallTexture = LoadTexture("assets/ball.png");
+    
+
     float scaleFactor = 4.0f;
     m_ScaledRadius = (m_BallTexture.width / 2.0f) * scaleFactor;
 
-    m_ArrowTexture = LoadTexture("assets/arrow.png");
+
     m_ArrowOrigin = { m_ArrowTexture.width / 2.0f, m_ArrowTexture.height / 2.0f };
     m_DragLength = 1.0f;
 
@@ -28,8 +31,7 @@ Ball::Ball(int screenWidth, int screenHeight)
 
 Ball::~Ball()
 {
-    UnloadTexture(m_BallTexture);
-    UnloadTexture(m_ArrowTexture);
+    
 }
 
 void Ball::Draw()
@@ -101,8 +103,8 @@ void Ball::Move(float deltaTime)
 
     if (m_Speed < 100.0f) // Using a small threshold to stop the ball
     {
-        m_IsActive = false;
         m_Speed = 0.0f;
+        m_IsActive = false;
     }
 
 }

@@ -1,17 +1,21 @@
 #include "obstacle.h"
-#include <iostream>
+#include "TextureManager.h" 
 
-
-Texture2D Obstacle::m_ObstacleTexture{};
 
 Obstacle::Obstacle()
+    : m_ObstacleTexture(TextureManager::GetTexture(3, 0))
 {
-    LoadTextures();
+
+}
+
+Obstacle::Obstacle(Texture2D texture)
+    : m_ObstacleTexture(texture)
+{
 }
 
 Obstacle::~Obstacle()
 {
-    
+
 }
 
 void Obstacle::Draw()
@@ -39,19 +43,7 @@ Vector2 Obstacle::GetPosition() const
     return m_Position;
 }
 
-void Obstacle::LoadTextures()
+void Obstacle::SetTexture(Texture2D texture)
 {
-    if (m_ObstacleTexture.id == 0)
-    {
-        m_ObstacleTexture = LoadTexture("assets/obstacle.png");
-    }
-}
-
-void Obstacle::UnloadTextures()
-{
-    if (m_ObstacleTexture.id != 0) 
-    {
-        UnloadTexture(m_ObstacleTexture);
-        m_ObstacleTexture.id = 0; 
-    }
+    m_ObstacleTexture = texture;
 }

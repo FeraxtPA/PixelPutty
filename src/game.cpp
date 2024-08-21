@@ -9,12 +9,13 @@ Game::Game(int width, int height)
      m_Ball{ m_ScreenWidth, m_ScreenHeight },
      m_Hole{ m_ScreenWidth, m_ScreenHeight },
      m_Background{ m_ScreenWidth, m_ScreenHeight },
-
      m_ScaleDuration{ 1.0f }, // Duration in seconds to scale down
-     m_ScaleSpeed{ 0.0f }, // This will be calculated
+     m_ScaleSpeed{ 0.0f }, 
      m_TargetScale{ 0.1f },
      m_IsInHole{ false }
 {
+
+  
 
     // Calculate scale speed to reach target scale in m_ScaleDuration seconds
     float initialScale = m_Ball.GetScale();
@@ -26,24 +27,21 @@ Game::Game(int width, int height)
     
     
     // Initialize obstacles with positions
-    m_Obstacles.emplace_back();  // First obstacle
+    m_Obstacles.emplace_back();  
     m_Obstacles.back().SetPosition({ 200.0f, 200.0f });
 
-    m_Obstacles.emplace_back();  // Second obstacle
+    m_Obstacles.emplace_back();  
     m_Obstacles.back().SetPosition({ 400.0f, 300.0f });
 
-  
-   
-   
 
     
 }
 
 
+
 Game::~Game()
 {
-    Obstacle::UnloadTextures();
-
+    TextureManager::Unload();
 }
 
 void Game::Draw()
@@ -54,8 +52,10 @@ void Game::Draw()
     
     for (auto& obstacle : m_Obstacles)
     {
-        obstacle.Draw();  // Draw each obstacle
+        obstacle.Draw();  
     }
+
+  
 }
 
 void Game::Update(float deltaTime)
@@ -79,12 +79,7 @@ void Game::Update(float deltaTime)
         ApplyCollisionResponse();
     }
     
-    
-        
 
-      
-    
-  
 }
 
 bool Game::CheckBallAndHoleCollision()

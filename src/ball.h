@@ -9,15 +9,15 @@ public:
     void Draw();
     void Update(float deltaTime);
     void Move(float deltaTime);
-    Vector2 GetPosition() { return m_Position; }
-    float GetRadius() { return m_ScaledRadius; }
-    float GetSpeed() { return m_Speed; }
-    float GetScale() {return m_Scale;}
+    Vector2 GetPosition() const { return m_Position; }
+    float GetRadius() const { return m_ScaledRadius; }
+    float GetSpeed() const  { return m_Speed; }
+    float GetScale() const {return m_Scale;}
     void SetSpeed(float speed){m_Speed = speed;}
     void SetScale(float scale){m_Scale = scale;}
     void SetPosition(Vector2 position){m_Position = position;}
     void Reset(Vector2 position);
-    Vector2 GetDirection() { return m_Direction; }
+    Vector2 GetDirection() const { return m_Direction; }
     void DecreaseSpeed(float factor);
     void ReflectDirectionX();
     void ReflectDirectionY();
