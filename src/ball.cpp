@@ -23,6 +23,7 @@ Ball::Ball(int screenWidth, int screenHeight)
 
     m_Scale = 1.0f;
 
+    m_IsActive = false;
 }
 
 Ball::~Ball()
@@ -61,7 +62,7 @@ void Ball::Draw()
 void Ball::Move(float deltaTime)
 {
 
-   
+    m_IsActive = true; // So that user can't click the ball when it's moving
 
 
     m_Position.x += m_Direction.x * m_Speed * deltaTime;
@@ -100,6 +101,7 @@ void Ball::Move(float deltaTime)
 
     if (m_Speed < 100.0f) // Using a small threshold to stop the ball
     {
+        m_IsActive = false;
         m_Speed = 0.0f;
     }
 
@@ -112,11 +114,26 @@ void Ball::Reset(Vector2 position)
     m_Position = position;
 }
 
+void Ball::DecreaseSpeed(float factor)
+{
+    m_Speed *= factor;
+}
+
+void Ball::ReflectDirectionX()
+{
+    m_Direction.x *= -1;
+}
+
+void Ball::ReflectDirectionY()
+{
+    m_Direction.y *= -1;
+}
+
 void Ball::Update(float deltaTime)
 {
     m_MousePos = GetMousePosition();
 
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !m_IsActive)
     {
 
         if (CheckCollisionPointCircle(m_MousePos, m_Position, m_ScaledRadius))

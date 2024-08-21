@@ -17,6 +17,10 @@ public:
     void SetScale(float scale){m_Scale = scale;}
     void SetPosition(Vector2 position){m_Position = position;}
     void Reset(Vector2 position);
+    Vector2 GetDirection() { return m_Direction; }
+    void DecreaseSpeed(float factor);
+    void ReflectDirectionX();
+    void ReflectDirectionY();
 private:
     float m_Speed{ 0.0f };
     float m_Scale{};
@@ -28,6 +32,7 @@ private:
     int m_ScreenHeight{};
     float m_Friction{ 0.95f };
     bool m_IsDragging{};
+    bool m_IsActive{};
     Vector2 m_DragStart{};
     Vector2 m_MousePos{};
 

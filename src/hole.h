@@ -18,5 +18,5 @@ private:
 	float m_ScaledRadius{};
 	Texture2D m_HoleTexture;
 	Vector2 m_Position{};
-	Vector2 m_ScreenSize{};
+
 };
