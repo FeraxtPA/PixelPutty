@@ -138,8 +138,8 @@ void Ball::DrawPowerBar()
     const float barWidth{ 20.0f };
     const float barHeight{ 4.5f };
     
-
-    DrawRectangle(m_Position.x + 3*barWidth, m_Position.y -50, 25, 100, BLACK);
+    Rectangle rect = {m_Position.x +3*barWidth, m_Position.y -50, 25, 100};
+    DrawRectangleRounded(rect, 0.5f, 4, BLACK);
 
     int numBars = static_cast<int>(m_Speed / 150.0f);
     if (numBars > 20) numBars = 20;
