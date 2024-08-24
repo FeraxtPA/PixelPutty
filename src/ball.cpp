@@ -55,7 +55,8 @@ void Ball::Draw()
             m_ArrowRotation,
             WHITE);
 
-        DrawLineEx({ m_Position.x,m_Position.y }, { m_MousePos.x, m_MousePos.y }, 5, RED);
+        DrawPowerBar();
+
     }
         
     DrawTextureEx(m_BallTexture, { m_Position.x - m_ScaledRadius * m_Scale ,m_Position.y - m_ScaledRadius * m_Scale }, 0, 4 * m_Scale, WHITE);
@@ -131,6 +132,44 @@ void Ball::ReflectDirectionY()
     m_Direction.y *= -1;
 }
 
+void Ball::DrawPowerBar()
+{
+    PowerBar colors;
+    const float barWidth{ 20.0f };
+    const float barHeight{ 4.5f };
+    
+
+    DrawRectangle(m_Position.x + barWidth, m_Position.y, 25, 100, BLACK);
+
+    int numBars = static_cast<int>(m_Speed / 150.0f);
+    if (numBars > 20) numBars = 20;
+
+    Vector2 barPosition = { m_Position.x + barWidth, m_Position.y };
+
+    for (int i{ 0 }; i < numBars; ++i)
+    {
+        Color barColor;
+        if (i < 5)
+        {
+            barColor = colors.m_Red;
+        }
+        else if (i < 10) {
+            barColor = colors.m_Yellow;
+        }
+        else if (i < 15) {
+            barColor = colors.m_Green;
+        }
+        else
+        {
+            barColor = colors.m_LightGreen;
+        }
+        Vector2 rectPosition = { barPosition.x+2.5, barPosition.y - barHeight * i  + 90.0f};
+        DrawRectangleV(rectPosition, { barWidth, barHeight }, barColor);
+    }
+    
+        
+}
+
 void Ball::Update(float deltaTime)
 {
     m_MousePos = GetMousePosition();
@@ -152,15 +191,22 @@ void Ball::Update(float deltaTime)
 
         m_ArrowRotation = atan2(m_Position.y - m_MousePos.y, m_Position.x - m_MousePos.x) * (180 / PI);
 
-        // If the mouse button is released, calculate speed and direction
+        Vector2 dragVector = { m_MousePos.x - m_DragStart.x, m_MousePos.y - m_DragStart.y };
+
+        m_DragLength = sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y);
+
+        m_Speed = std::min(sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y) * 5, 3000.0f); // Speed multiplier, otherwise too slow
+
+        std::cout << m_Speed << "\n";
+
+        
+
+                    // If the mouse button is released, calculate speed and direction
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
-            Vector2 dragVector = { m_MousePos.x - m_DragStart.x, m_MousePos.y - m_DragStart.y };
-            m_Speed = std::min(sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y) * 5.0f, 3000.0f); // Adjust the multiplier as needed for game feel
+            
             
             // Normalize the direction vector
-            m_DragLength = sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y);
-            
             if (m_DragLength > 0)
             {
                 //Minus becase we need to send the ball

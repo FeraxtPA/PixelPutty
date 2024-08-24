@@ -21,6 +21,9 @@ public:
     void DecreaseSpeed(float factor);
     void ReflectDirectionX();
     void ReflectDirectionY();
+
+private:
+    void DrawPowerBar();
 private:
     float m_Speed{ 0.0f };
     float m_Scale{};
@@ -44,6 +47,12 @@ private:
     float m_BallMass{ 0.5f };
     float m_RollingFrictionCoefficient{ 0.1f };
    
-    
+    struct PowerBar
+    {
+        Color m_Red{177,62,83,255};
+        Color m_Yellow{255,205,117,255};
+        Color m_Green{ 37,113,121,255 };
+        Color m_LightGreen{167,240,112,255};
+    };
 
 };

@@ -13,7 +13,7 @@ int main()
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "PixelPutty");
     SetMouseCursor(MOUSE_CURSOR_ARROW);
-    SetTargetFPS(165);             
+    //SetTargetFPS(165);             
     SetExitKey(KEY_NULL);
 
     TextureManager::LoadSpriteSheet("assets/Spritesheet.png", 8, 8);
