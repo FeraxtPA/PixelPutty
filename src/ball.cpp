@@ -139,12 +139,12 @@ void Ball::DrawPowerBar()
     const float barHeight{ 4.5f };
     
 
-    DrawRectangle(m_Position.x + barWidth, m_Position.y, 25, 100, BLACK);
+    DrawRectangle(m_Position.x + 3*barWidth, m_Position.y -50, 25, 100, BLACK);
 
     int numBars = static_cast<int>(m_Speed / 150.0f);
     if (numBars > 20) numBars = 20;
 
-    Vector2 barPosition = { m_Position.x + barWidth, m_Position.y };
+    Vector2 barPosition = { m_Position.x+ 3*barWidth, m_Position.y };
 
     for (int i{ 0 }; i < numBars; ++i)
     {
@@ -152,6 +152,7 @@ void Ball::DrawPowerBar()
         if (i < 5)
         {
             barColor = colors.m_Red;
+            
         }
         else if (i < 10) {
             barColor = colors.m_Yellow;
@@ -163,7 +164,7 @@ void Ball::DrawPowerBar()
         {
             barColor = colors.m_LightGreen;
         }
-        Vector2 rectPosition = { barPosition.x+2.5, barPosition.y - barHeight * i  + 90.0f};
+        Vector2 rectPosition = { barPosition.x+2.5f, barPosition.y - barHeight * i  + 40.0f};
         DrawRectangleV(rectPosition, { barWidth, barHeight }, barColor);
     }
     

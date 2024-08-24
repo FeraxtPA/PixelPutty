@@ -48,13 +48,13 @@ void Game::Draw()
 {
 	m_Background.Draw();
 	m_Hole.Draw();
-	m_Ball.Draw();
     
     for (auto& obstacle : m_Obstacles)
     {
         obstacle.Draw();  
     }
 
+	m_Ball.Draw();
   
 }
 
