@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -I$/usr/local/include
+CXXFLAGS = -std=c++20 -Wall -Wextra -I/usr/local/include
 
 # Directories
 BUILD_DIR = build

@@ -13,9 +13,9 @@
     "-Wshadow",
     "-Wformat=2",
     "-Wcast-align",
-    "-Wconversion",
-    "-Wsign-conversion",
-    "-Wnull-dereference"
+    "-Wnull-dereference",
+    "-Wno-conversion",      // Disable conversion warnings
+    "-Wno-sign-conversion"  // Disable sign conversion warnings
   ],
   "C_Cpp_Runner.msvcWarnings": [
     "/W4",

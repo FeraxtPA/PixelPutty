@@ -143,28 +143,28 @@ void Ball::DrawPowerBar()
 
     // Draw the black background bar
     DrawRectangle(
-        static_cast<float>(m_Position.x + 56.5f),
-        static_cast<float>(m_Position.y - 3.0f - (m_PowerBarFillTexture.height * 10.0f) / 2.0f),
-        static_cast<float>(m_PowerBarFillTexture.width * scaleX + 6.0f),
-        static_cast<float>(m_PowerBarFillTexture.height * 10.0f + 6.0f),
+        m_Position.x + 56.5f,
+        m_Position.y - 3.0f - (m_PowerBarFillTexture.height * 10.0f) / 2.0f,
+        m_PowerBarFillTexture.width * scaleX + 6.0f,
+        m_PowerBarFillTexture.height * 10.0f + 6.0f,
         colors.m_Black
     );
 
     Rectangle sourceRec = {
-        0,
-        0,
-        static_cast<int>(m_PowerBarFillTexture.width),
-        static_cast<int>(m_PowerBarFillTexture.height)
+        0.0f,
+        0.0f,
+        static_cast<float>(m_PowerBarFillTexture.width),
+        static_cast<float>(m_PowerBarFillTexture.height)
     };
 
 
 
     // Adjust destRec to scale from bottom to top, aligned to pixels
     Rectangle destRec = {
-        static_cast<int>(m_Position.x + 59.5f + scaleX * m_PowerBarFillTexture.width ),  // X position
-        static_cast<int>(m_Position.y +0.5f + (m_PowerBarFillTexture.height * 10.0f) / 2.0f),  // Y position, scales from bottom to top
-        static_cast<float>(m_PowerBarFillTexture.width * scaleX),  // Width
-        static_cast<float>(m_PowerBarFillTexture.height * scaleY)// Height
+        m_Position.x + 59.5f + scaleX * m_PowerBarFillTexture.width ,  // X position
+        m_Position.y +0.5f + (m_PowerBarFillTexture.height * 10.0f) / 2.0f,  // Y position, scales from bottom to top
+        m_PowerBarFillTexture.width * scaleX,  // Width
+        m_PowerBarFillTexture.height * scaleY// Height
     };
 
     // Draw the power bar fill texture with origin set at the bottom left corner to scale upwards
