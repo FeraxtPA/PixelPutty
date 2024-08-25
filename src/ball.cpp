@@ -11,6 +11,8 @@ Ball::Ball(int screenWidth, int screenHeight)
 
     m_BallTexture = TextureManager::GetTexture(0, 0);
     m_ArrowTexture = TextureManager::GetTexture(1, 0);
+    m_PowerBarFillTexture = TextureManager::GetTexture(5, 0);
+
     m_Position.x = static_cast<float>(m_ScreenWidth) / 2;
     m_Position.y = static_cast<float>(m_ScreenHeight) / 2;
     m_IsDragging = false;
@@ -134,42 +136,49 @@ void Ball::ReflectDirectionY()
 
 void Ball::DrawPowerBar()
 {
+    float scaleX = 3.0f;
+    float scaleY = m_Speed / 300.0f;
+
     PowerBar colors;
-    const float barWidth{ 20.0f };
-    const float barHeight{ 4.5f };
-    
-    Rectangle rect = {m_Position.x +3*barWidth, m_Position.y -50, 25, 100};
-    DrawRectangleRounded(rect, 0.5f, 4, BLACK);
 
-    int numBars = static_cast<int>(m_Speed / 150.0f);
-    if (numBars > 20) numBars = 20;
+    // Draw the black background bar
+    DrawRectangle(
+        static_cast<float>(m_Position.x + 56.5f),
+        static_cast<float>(m_Position.y - 3.0f - (m_PowerBarFillTexture.height * 10.0f) / 2.0f),
+        static_cast<float>(m_PowerBarFillTexture.width * scaleX + 6.0f),
+        static_cast<float>(m_PowerBarFillTexture.height * 10.0f + 6.0f),
+        colors.m_Black
+    );
 
-    Vector2 barPosition = { m_Position.x+ 3*barWidth, m_Position.y };
+    Rectangle sourceRec = {
+        0,
+        0,
+        static_cast<int>(m_PowerBarFillTexture.width),
+        static_cast<int>(m_PowerBarFillTexture.height)
+    };
 
-    for (int i{ 0 }; i < numBars; ++i)
-    {
-        Color barColor;
-        if (i < 5)
-        {
-            barColor = colors.m_Red;
-            
-        }
-        else if (i < 10) {
-            barColor = colors.m_Yellow;
-        }
-        else if (i < 15) {
-            barColor = colors.m_Green;
-        }
-        else
-        {
-            barColor = colors.m_LightGreen;
-        }
-        Vector2 rectPosition = { barPosition.x+2.5f, barPosition.y - barHeight * i  + 40.0f};
-        DrawRectangleV(rectPosition, { barWidth, barHeight }, barColor);
-    }
-    
-        
+
+
+    // Adjust destRec to scale from bottom to top, aligned to pixels
+    Rectangle destRec = {
+        static_cast<int>(m_Position.x + 59.5f + scaleX * m_PowerBarFillTexture.width ),  // X position
+        static_cast<int>(m_Position.y +0.5f + (m_PowerBarFillTexture.height * 10.0f) / 2.0f),  // Y position, scales from bottom to top
+        static_cast<float>(m_PowerBarFillTexture.width * scaleX),  // Width
+        static_cast<float>(m_PowerBarFillTexture.height * scaleY)// Height
+    };
+
+    // Draw the power bar fill texture with origin set at the bottom left corner to scale upwards
+    DrawTexturePro(
+        m_PowerBarFillTexture,
+        sourceRec,
+        destRec,
+        { m_PowerBarFillTexture.width * scaleX,  std::ceil(m_PowerBarFillTexture.height * scaleY * 10.0f) / 10.0f},  // Origin for drawing
+        0.0f,  // Rotation
+        WHITE
+    );
 }
+
+
 
 void Ball::Update(float deltaTime)
 {
@@ -198,11 +207,9 @@ void Ball::Update(float deltaTime)
 
         m_Speed = std::min(sqrt(dragVector.x * dragVector.x + dragVector.y * dragVector.y) * 5, 3000.0f); // Speed multiplier, otherwise too slow
 
-        std::cout << m_Speed << "\n";
-
         
 
-                    // If the mouse button is released, calculate speed and direction
+                   
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
             

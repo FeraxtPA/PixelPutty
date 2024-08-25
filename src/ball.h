@@ -41,6 +41,8 @@ private:
 
     Texture2D m_BallTexture{};
     Texture2D m_ArrowTexture{};
+    Texture2D m_PowerBarFillTexture{};
+
     float m_ArrowRotation{};
     Vector2 m_ArrowOrigin;
 
@@ -53,6 +55,7 @@ private:
         Color m_Yellow{255,205,117,255};
         Color m_Green{ 37,113,121,255 };
         Color m_LightGreen{167,240,112,255};
+        Color m_Black{ 26,28,44,255 };
     };
 
 };
