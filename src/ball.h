@@ -1,13 +1,15 @@
 #pragma once
 #include "raylib.h"
 #include "math.h"
+#include "ui.h"
+
 class Ball
 {
 public:
     Ball(int screenWidth, int screenHeight);
     ~Ball();
     void Draw();
-    void Update(float deltaTime);
+    void Update(float deltaTime, UI& ui);
     void Move(float deltaTime);
     Vector2 GetPosition() const { return m_Position; }
     float GetRadius() const { return m_ScaledRadius; }
@@ -29,8 +31,10 @@ private:
     float m_Scale{};
     float m_DragLength{};
     float m_ScaledRadius{};
+    int m_Strokes{};
     Vector2 m_Position{};
     Vector2 m_Direction{ 1,1 };
+    
     int m_ScreenWidth{};
     int m_ScreenHeight{};
     float m_Friction{ 0.95f };
@@ -49,13 +53,6 @@ private:
     float m_BallMass{ 0.5f };
     float m_RollingFrictionCoefficient{ 0.1f };
    
-    struct PowerBar
-    {
-        Color m_Red{177,62,83,255};
-        Color m_Yellow{255,205,117,255};
-        Color m_Green{ 37,113,121,255 };
-        Color m_LightGreen{167,240,112,255};
-        Color m_Black{ 26,28,44,255 };
-    };
+ 
 
 };

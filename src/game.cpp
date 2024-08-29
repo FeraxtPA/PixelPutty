@@ -6,16 +6,17 @@
 Game::Game(int width, int height)
    : m_ScreenWidth{ width },
      m_ScreenHeight{ height },
-     m_Ball{ m_ScreenWidth, m_ScreenHeight },
+     m_Ball{ m_ScreenWidth, m_ScreenHeight},
      m_Hole{ m_ScreenWidth, m_ScreenHeight },
      m_Background{ m_ScreenWidth, m_ScreenHeight },
+     m_UI{m_ScreenWidth, m_ScreenHeight},
      m_ScaleDuration{ 1.0f }, // Duration in seconds to scale down
      m_ScaleSpeed{ 0.0f }, 
      m_TargetScale{ 0.1f },
      m_IsInHole{ false }
 {
 
-  
+    
 
     // Calculate scale speed to reach target scale in m_ScaleDuration seconds
     float initialScale = m_Ball.GetScale();
@@ -55,12 +56,14 @@ void Game::Draw()
     }
 
 	m_Ball.Draw();
-  
+    
+    m_UI.Draw();
+
 }
 
 void Game::Update(float deltaTime)
 {
-	m_Ball.Update(deltaTime);
+	m_Ball.Update(deltaTime, m_UI);
 	
 
 

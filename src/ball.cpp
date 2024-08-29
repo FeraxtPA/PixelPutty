@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <iostream>
 #include "TextureManager.h"
+#include "colors.h"
 
 Ball::Ball(int screenWidth, int screenHeight)
 {
@@ -16,9 +17,8 @@ Ball::Ball(int screenWidth, int screenHeight)
     m_Position.x = static_cast<float>(m_ScreenWidth) / 2;
     m_Position.y = static_cast<float>(m_ScreenHeight) / 2;
     m_IsDragging = false;
-
     
-
+    m_Strokes = 0;
     float scaleFactor = 4.0f;
     m_ScaledRadius = (m_BallTexture.width / 2.0f) * scaleFactor;
 
@@ -67,6 +67,7 @@ void Ball::Draw()
 void Ball::Move(float deltaTime)
 {
 
+    
     m_IsActive = true; // So that user can't click the ball when it's moving
 
 
@@ -139,7 +140,9 @@ void Ball::DrawPowerBar()
     float scaleX = 3.0f;
     float scaleY = m_Speed / 300.0f;
 
-    PowerBar colors;
+    
+
+  
 
     // Draw the black background bar
     DrawRectangle(
@@ -147,7 +150,7 @@ void Ball::DrawPowerBar()
         m_Position.y - 3.0f - (m_PowerBarFillTexture.height * 10.0f) / 2.0f,
         m_PowerBarFillTexture.width * scaleX + 6.0f,
         m_PowerBarFillTexture.height * 10.0f + 6.0f,
-        colors.m_Black
+        PuttyColor::Black
     );
 
     Rectangle sourceRec = {
@@ -161,10 +164,10 @@ void Ball::DrawPowerBar()
 
     // Adjust destRec to scale from bottom to top, aligned to pixels
     Rectangle destRec = {
-        m_Position.x + 59.5f + scaleX * m_PowerBarFillTexture.width ,  // X position
-        m_Position.y +0.5f + (m_PowerBarFillTexture.height * 10.0f) / 2.0f,  // Y position, scales from bottom to top
+        m_Position.x + 59.5f + scaleX * m_PowerBarFillTexture.width , 
+        m_Position.y +0.5f + (m_PowerBarFillTexture.height * 10.0f) / 2.0f,  
         m_PowerBarFillTexture.width * scaleX,  // Width
-        m_PowerBarFillTexture.height * scaleY// Height
+        m_PowerBarFillTexture.height * scaleY  // Height
     };
 
     // Draw the power bar fill texture with origin set at the bottom left corner to scale upwards
@@ -172,7 +175,7 @@ void Ball::DrawPowerBar()
         m_PowerBarFillTexture,
         sourceRec,
         destRec,
-        { m_PowerBarFillTexture.width * scaleX,  std::ceil(m_PowerBarFillTexture.height * scaleY * 10.0f) / 10.0f},  // Origin for drawing
+        { m_PowerBarFillTexture.width * scaleX,  m_PowerBarFillTexture.height * scaleY},  // Origin for drawing
         0.0f,  // Rotation
         WHITE
     );
@@ -180,7 +183,7 @@ void Ball::DrawPowerBar()
 
 
 
-void Ball::Update(float deltaTime)
+void Ball::Update(float deltaTime, UI& ui)
 {
     m_MousePos = GetMousePosition();
 
@@ -212,11 +215,11 @@ void Ball::Update(float deltaTime)
                    
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
-            
-            
+          
             // Normalize the direction vector
-            if (m_DragLength > 0)
+            if (m_DragLength > 15.0f)
             {
+                ui.SetStrokes(++m_Strokes);
                 //Minus becase we need to send the ball
                 //the opposite direction from the drag motion
                 m_Direction.x = -dragVector.x / m_DragLength;
@@ -224,11 +227,17 @@ void Ball::Update(float deltaTime)
             }
 
             m_IsDragging = false;
+            
         }
     }
     else
     {
-        Move(deltaTime);
+        
+        if (m_DragLength > 15.0f)
+        {
+            Move(deltaTime);
+        }
+        
 
     }
 }

@@ -6,6 +6,7 @@
 #include "obstacle.h"
 #include <vector>
 #include "TextureManager.h"
+#include "ui.h"
 
 class Game
 {
@@ -26,9 +27,12 @@ public:
 private:
 	int m_ScreenWidth{};
 	int m_ScreenHeight{};
+	
+
 	Ball m_Ball;
 	Hole m_Hole;
 	Background m_Background;
+	UI m_UI;
 	std::vector<Obstacle> m_Obstacles;
 
 	float m_ScaleDuration{};
