@@ -10,9 +10,7 @@ public:
 	~UI();
 	void Draw();
 	void SetStrokes(int strokes) { m_Strokes = strokes; }
-	int GetTextWidth(std::string& string, int fontSize);
-	int GetTextHeight(int fontSize);
-	void DrawTextOutlined(const std::string& text, float posX, float posY, int fontSize, Color textColor, Color outlineColor, int outlineThickness, Font font);
+	void LoadOutlineShader(const std::string& filePath);
 	void LoadCustomFont(const std::string& filePath);
 	
 
@@ -21,5 +19,8 @@ private:
 	int m_ScreenWidth{};
 	int m_ScreenHeight{};
 	Font m_Font{};
-
+	Shader m_OutlineShader{};
+	RenderTexture2D m_TextTexture{};
+	std::string m_StrokeText{};
+	int m_FontSize{};
 };
